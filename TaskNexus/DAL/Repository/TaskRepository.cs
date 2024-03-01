@@ -47,9 +47,9 @@ namespace TaskNexus.DAL.Repository
             return await _db.Tasks.FindAsync(id);
         }
 
-        public async Task<List<Task_Entity>> Select()
+        public async Task<List<Task_Entity>> Select(string assignedToId)
         {
-            return await _db.Tasks.ToListAsync();
+            return await _db.Tasks.Where(task => task.AssignedToId == assignedToId).ToListAsync();
         }
 
         public async Task<Task_Entity> Update(Task_Entity entity)

@@ -1,50 +1,96 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using System.Net.Http.Headers;
+using System.Security.Claims;
 using TaskNexus.Models.ApplicationUser;
+using TaskNexus.Models.ViewModel.User;
 using TaskNexus.Service.InterfaceService;
 
 namespace TaskNexus.Controllers
 {
+    [Route("/api/[controller]")]
     [ApiController]
-    public class ApplicationUserController : ControllerBase
+    public class ApplicationUserController : Controller
     {
         private readonly IApplicationUserService _applicationUserService;
-        public ApplicationUserController(IApplicationUserService applicationUserService)
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        public ApplicationUserController(IApplicationUserService applicationUserService, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _applicationUserService = applicationUserService;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
-
 
         [HttpPost]
-        [Route("api/users")]
-        public async Task<IActionResult> CreateUser(ApplicationUser user)
+        [Route("Register")]
+        public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            try
+            var result = await _applicationUserService.Register(model);
+            if (result.StatusCode ==Models.Enum.StatusCode.OK && result.Data)
             {
-                await _applicationUserService.CreateUser(user);
-                return Ok("User created successfully");
+                return Ok("User registered successfully");
             }
-            catch (Exception ex)
+            else
             {
-                return BadRequest($"Failed to create user: {ex.Message}");
+                return BadRequest(result.Description);
             }
         }
 
+        [HttpPost]
+        [Route("Login")]
+        public async Task<IActionResult> Login(LoginViewModel model)
+        {
+            var result = await _applicationUserService.Login(model);
+            if (result.StatusCode == Models.Enum.StatusCode.OK && result.Data)
+            {
+                return Ok("User logged in successfully");
+            }
+            else
+            {
+                return Unauthorized(result.Description);
+            }
+        }
+
+
+
+
+
+
+
+
+
+
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetUserById(string id)
         {
             var user = await _applicationUserService.GetUser(id);
-            if (user != null)
+            if (user.Data != null)
+            {
                 return Ok(user);
+            }
             else
-                return NotFound("User not found");
+            {
+                return BadRequest(user.Description);
+            }
         }
 
         [HttpGet]
-        [Route("api/users")]
+        [Route("GetUsers")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAllUsers()
         {
             var users = await _applicationUserService.SelectUsers();
-            return Ok(users);
+            if (users.StatusCode != Models.Enum.StatusCode.NullEntity)
+            {
+                return Ok(users);
+            }
+            else
+            {
+                return BadRequest(users.Description);
+            }
         }
 
         [HttpPut("{id}")]
@@ -52,14 +98,17 @@ namespace TaskNexus.Controllers
         {
             try
             {
-                if (id != user.Id)
-                    return BadRequest("User ID mismatch");
 
                 var updatedUser = await _applicationUserService.UpdateUser(id,user);
-                if (updatedUser != null)
-                    return Ok("User updated successfully");
+                if (updatedUser.StatusCode == Models.Enum.StatusCode.NullEntity)
+                {
+
+                    return BadRequest(updatedUser.Description);
+                }
                 else
-                    return NotFound("User not found");
+                {
+                    return Ok(updatedUser.Data);
+                }
             }
             catch (Exception ex)
             {
@@ -68,6 +117,7 @@ namespace TaskNexus.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteUser(string id)
         {
             try

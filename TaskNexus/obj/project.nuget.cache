@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "+0dtTuPJF4MonFYv4ZdkH2VivYnAzD/dFSFVJow4iG3PzaeC+Lj+j2+zezxqiSSmJiQm4Z5VyqsJe05mhGWJVA==",
+  "dgSpecHash": "LyhCRwlnTTxqiu1Rr/WP6eGnuXV7P0Qrhv3Ta6Z85GYZYCodSBVE6VjPcgv4rxRgeORtBFiHafmRLa1orjOKWA==",
   "success": true,
-  "projectFilePath": "E:\\C#LAB\\aspnet\\TaskNexus_GIT\\TaskNexus\\TaskNexus\\TaskNexus.csproj",
+  "projectFilePath": "E:\\C#LAB\\aspnet\\TaskNexus – копія\\TaskNexus\\TaskNexus.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\drake\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\drake\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\6.0.0\\microsoft.aspnetcore.cryptography.internal.6.0.0.nupkg.sha512",

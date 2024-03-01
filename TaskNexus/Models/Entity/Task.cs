@@ -14,7 +14,6 @@ namespace TaskNexus.Models.Entity
         public TaskPriority Priority { get; set; }
         public DateTime Deadline { get; set; }
         public string AssignedToId { get; set; }
-        public TaskNexus.Models.ApplicationUser.ApplicationUser AssignedTo { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }

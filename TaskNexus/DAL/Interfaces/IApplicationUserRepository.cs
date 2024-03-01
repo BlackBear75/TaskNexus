@@ -11,7 +11,9 @@ namespace TaskNexus.DAL.Interfaces
 
         Task<List<ApplicationUser>> Select();
 
+    
         Task<bool> Delete(ApplicationUser entity);
+
 
         Task<ApplicationUser> Update(ApplicationUser entity);
     }

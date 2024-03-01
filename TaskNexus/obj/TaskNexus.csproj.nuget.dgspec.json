@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\C#LAB\\aspnet\\TaskNexus_GIT\\TaskNexus\\TaskNexus\\TaskNexus.csproj": {}
+    "E:\\C#LAB\\aspnet\\TaskNexus – копія\\TaskNexus\\TaskNexus.csproj": {}
   },
   "projects": {
-    "E:\\C#LAB\\aspnet\\TaskNexus_GIT\\TaskNexus\\TaskNexus\\TaskNexus.csproj": {
+    "E:\\C#LAB\\aspnet\\TaskNexus – копія\\TaskNexus\\TaskNexus.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\C#LAB\\aspnet\\TaskNexus_GIT\\TaskNexus\\TaskNexus\\TaskNexus.csproj",
+        "projectUniqueName": "E:\\C#LAB\\aspnet\\TaskNexus – копія\\TaskNexus\\TaskNexus.csproj",
         "projectName": "TaskNexus",
-        "projectPath": "E:\\C#LAB\\aspnet\\TaskNexus_GIT\\TaskNexus\\TaskNexus\\TaskNexus.csproj",
+        "projectPath": "E:\\C#LAB\\aspnet\\TaskNexus – копія\\TaskNexus\\TaskNexus.csproj",
         "packagesPath": "C:\\Users\\drake\\.nuget\\packages\\",
-        "outputPath": "E:\\C#LAB\\aspnet\\TaskNexus_GIT\\TaskNexus\\TaskNexus\\obj\\",
+        "outputPath": "E:\\C#LAB\\aspnet\\TaskNexus – копія\\TaskNexus\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\drake\\AppData\\Roaming\\NuGet\\NuGet.Config",

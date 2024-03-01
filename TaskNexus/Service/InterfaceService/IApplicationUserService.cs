@@ -1,11 +1,16 @@
-﻿using TaskNexus.Models.ApplicationUser;
+﻿using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
+using TaskNexus.Models.ApplicationUser;
 using TaskNexus.Models.Response;
+using TaskNexus.Models.ViewModel.User;
 
 namespace TaskNexus.Service.InterfaceService
 {
     public interface IApplicationUserService
     {
-        Task<IBaseResponse<bool>> CreateUser(ApplicationUser entity);
+        Task<IBaseResponse<bool>> Register(RegisterViewModel entity);
+        Task<IBaseResponse<bool>> Login(LoginViewModel entity);
+
 
         Task<IBaseResponse<ApplicationUser>> GetUser(string id);
 

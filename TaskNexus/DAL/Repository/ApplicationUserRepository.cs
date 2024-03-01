@@ -42,9 +42,11 @@ namespace TaskNexus.DAL.Repository
 
         public async Task<ApplicationUser> Get(string id)
         {
-            return await _db.Users.FindAsync(id);
-        }
 
+            return await _db.Users.FirstOrDefaultAsync(x => x.Id == id);
+         
+        }
+      
         public async Task<List<ApplicationUser>> Select()
         {
             return await _db.Users.ToListAsync();

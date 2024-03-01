@@ -4,6 +4,6 @@ namespace TaskNexus.Models.ApplicationUser
 {
     public class ApplicationUser : IdentityUser
     {
-        public string AvatarPhoto { get; set; }
+        public string AvatarPhoto { get; set; } = "";
     }
 }

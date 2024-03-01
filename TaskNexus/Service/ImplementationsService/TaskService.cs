@@ -17,7 +17,7 @@ namespace TaskNexus.Service.ImplementationsService
         }
 
 
-        public async Task<IBaseResponse<bool>> CreateTask(Task_Entity entity)
+        public async Task<IBaseResponse<bool>> CreateTask(Task_Entity entity,string userid)
         {
             var baseResponse = new BaseResponse<bool>();
             try
@@ -25,14 +25,17 @@ namespace TaskNexus.Service.ImplementationsService
                 if(entity==null)
                 {
                     baseResponse.StatusCode = StatusCode.NullEntity;
+                    baseResponse.Description = "task = null";
                     baseResponse.Data = false;
                     return baseResponse;
                 }
+                entity.AssignedToId = userid;
 
                 await _taskRepository.Create(entity);
 
 
                 baseResponse.StatusCode = StatusCode.OK;
+                baseResponse.Description = "Good job";
                 baseResponse.Data = true;
             }
             catch (Exception ex)
@@ -55,6 +58,7 @@ namespace TaskNexus.Service.ImplementationsService
                 if (task == null)
                 {
                     baseResponse.StatusCode = StatusCode.NullEntity;
+                    baseResponse.Description = "deletetask = null entity";
                     baseResponse.Data = false;
                     return baseResponse;
                 }
@@ -64,6 +68,7 @@ namespace TaskNexus.Service.ImplementationsService
 
 
                 baseResponse.StatusCode = StatusCode.OK;
+                baseResponse.Description = "Good delete task";
                 baseResponse.Data = true;
             }
             catch (Exception ex)
@@ -86,12 +91,14 @@ namespace TaskNexus.Service.ImplementationsService
                 if (task == null)
                 {
                     baseResponse.StatusCode = StatusCode.NullEntity;
+                    baseResponse.Description = "Gettask = null entity";
                    
                     return baseResponse;
                 }
 
 
                 baseResponse.StatusCode = StatusCode.OK;
+                baseResponse.Description = "Good job";
                 baseResponse.Data = task;
             }
             catch (Exception ex)
@@ -105,20 +112,22 @@ namespace TaskNexus.Service.ImplementationsService
             return baseResponse;
         }
 
-        public async Task<IBaseResponse<IEnumerable<Task_Entity>>> GetTasks()
+        public async Task<IBaseResponse<IEnumerable<Task_Entity>>> GetTasks(string userid)
         {
             var baseResponse = new BaseResponse<IEnumerable<Task_Entity>>();
             try
             {
-                var tasks = await _taskRepository.Select();
+                var tasks = await _taskRepository.Select(userid);
                 if (tasks == null)
                 {
                     baseResponse.StatusCode = StatusCode.NullEntity;
+                    baseResponse.Description = "Gettasks no find tasks";
                     return baseResponse;
                 }
 
 
                 baseResponse.StatusCode = StatusCode.OK;
+                baseResponse.Description = "Good job";
                 baseResponse.Data = tasks;
             }
             catch (Exception ex)
@@ -131,7 +140,7 @@ namespace TaskNexus.Service.ImplementationsService
             }
             return baseResponse;
         }
-        //подумать
+        
         public async Task<IBaseResponse<Task_Entity>> UpdateTask(int id,Task_Entity entity)
         {
             var baseResponse = new BaseResponse<Task_Entity>();
@@ -141,14 +150,21 @@ namespace TaskNexus.Service.ImplementationsService
                 if (task == null)
                 {
                     baseResponse.StatusCode = StatusCode.NullEntity;
+                    baseResponse.Description = "Updade task no entity";
                     return baseResponse;
                 }
                
-                    task.Title = entity.Title;
-                    
-                
+                task.Title = entity.Title;
+                task.Description = entity.Description;
+                task.Status = entity.Status;
+                task.Priority = entity.Priority;
+                task.Deadline = entity.Deadline;
+                task.UpdatedAt = DateTime.UtcNow;
 
+                
+               await _taskRepository.Update(task);
                 baseResponse.StatusCode = StatusCode.OK;
+                baseResponse.Description = "Good job";
                 baseResponse.Data = task;
             }
             catch (Exception ex)

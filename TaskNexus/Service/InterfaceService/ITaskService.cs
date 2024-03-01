@@ -5,11 +5,11 @@ namespace TaskNexus.Service.InterfaceService
 {
     public interface ITaskService
     {
-        Task<IBaseResponse<bool>> CreateTask(Task_Entity entity);
+        Task<IBaseResponse<bool>> CreateTask(Task_Entity entity, string userid);
 
         Task<IBaseResponse<Task_Entity>> GetTask(int id);
 
-        Task<IBaseResponse<IEnumerable<Task_Entity>>> GetTasks();
+        Task<IBaseResponse<IEnumerable<Task_Entity>>> GetTasks(string userid);
 
         Task<IBaseResponse<bool>> DeleteTask(int id);
 
