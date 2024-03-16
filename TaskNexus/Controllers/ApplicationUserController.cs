@@ -43,6 +43,7 @@ namespace TaskNexus.Controllers
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             var result = await _applicationUserService.Login(model);
+            var RES = _signInManager.IsSignedIn(User);
             if (result.StatusCode == Models.Enum.StatusCode.OK && result.Data)
             {
                 return Ok("User logged in successfully");

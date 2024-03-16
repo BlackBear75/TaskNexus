@@ -1,5 +1,6 @@
 ﻿using System;
 using TaskNexus.DAL.Interfaces;
+using TaskNexus.Models.ApplicationUser;
 using TaskNexus.Models.Entity;
 using TaskNexus.Models.Enum;
 using TaskNexus.Models.Response;
@@ -30,6 +31,8 @@ namespace TaskNexus.Service.ImplementationsService
                     return baseResponse;
                 }
                 entity.AssignedToId = userid;
+                entity.CreatedAt = DateTime.Now;
+                
 
                 await _taskRepository.Create(entity);
 
@@ -81,6 +84,8 @@ namespace TaskNexus.Service.ImplementationsService
             }
             return baseResponse;
         }
+
+       
 
         public async Task<IBaseResponse<Task_Entity>> GetTask(int id)
         {
@@ -153,16 +158,16 @@ namespace TaskNexus.Service.ImplementationsService
                     baseResponse.Description = "Updade task no entity";
                     return baseResponse;
                 }
-               
+              
                 task.Title = entity.Title;
                 task.Description = entity.Description;
                 task.Status = entity.Status;
                 task.Priority = entity.Priority;
                 task.Deadline = entity.Deadline;
                 task.UpdatedAt = DateTime.UtcNow;
+              
 
-                
-               await _taskRepository.Update(task);
+                await _taskRepository.Update(task);
                 baseResponse.StatusCode = StatusCode.OK;
                 baseResponse.Description = "Good job";
                 baseResponse.Data = task;

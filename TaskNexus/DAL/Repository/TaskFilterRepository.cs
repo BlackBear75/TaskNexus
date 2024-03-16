@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using TaskNexus.DAL.DB;
 using TaskNexus.DAL.Interfaces;
+using TaskNexus.Models.ApplicationUser;
 using TaskNexus.Models.Entity;
 
 namespace TaskNexus.DAL.Repository
@@ -13,6 +15,26 @@ namespace TaskNexus.DAL.Repository
         {
             _dbContext = dbContext;
         }
+
+        public async Task<EvaluationUser> GetEvaluationUser(int count, int taskcompleted)
+        {
+
+            if (count - taskcompleted <= 3)
+            {
+                return await _dbContext.evaluationUsers.FirstOrDefaultAsync(x => x.Id == 2);
+            }
+            if (count-taskcompleted<=10)
+            {
+                return  await _dbContext.evaluationUsers.FirstOrDefaultAsync(x => x.Id == 1);
+
+            }
+
+            return await  _dbContext.evaluationUsers.FirstOrDefaultAsync(x => x.Id == 3);
+
+
+
+        }
+
         public async Task<List<Task_Entity>> TaskExecutionStatus(string userid)
         {
             return await _dbContext.Tasks
@@ -50,6 +72,12 @@ namespace TaskNexus.DAL.Repository
             .Where(t => t.AssignedToId == userid)
             .OrderByDescending(t => t.Priority)
             .ToListAsync();
+        }
+
+        public async Task<List<Task_Entity>> UserTasks(string userid)
+        {
+            return await _dbContext.Tasks
+           .Where(t => t.AssignedToId == userid).ToListAsync();
         }
     }
 }

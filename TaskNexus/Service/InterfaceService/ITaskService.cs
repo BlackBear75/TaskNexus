@@ -1,4 +1,5 @@
-﻿using TaskNexus.Models.Entity;
+﻿using TaskNexus.Models.ApplicationUser;
+using TaskNexus.Models.Entity;
 using TaskNexus.Models.Response;
 
 namespace TaskNexus.Service.InterfaceService
@@ -14,5 +15,7 @@ namespace TaskNexus.Service.InterfaceService
         Task<IBaseResponse<bool>> DeleteTask(int id);
 
         Task<IBaseResponse<Task_Entity>> UpdateTask(int id,Task_Entity entity);
+
+       
     }
 }

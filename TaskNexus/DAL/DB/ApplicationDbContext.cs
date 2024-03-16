@@ -17,6 +17,8 @@ namespace TaskNexus.DAL.DB
 
         public DbSet<Task_Entity> Tasks { get; set; }
 
+        public DbSet<EvaluationUser> evaluationUsers { get; set; }
+
        
     }
 }

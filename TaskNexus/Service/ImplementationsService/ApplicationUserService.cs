@@ -17,11 +17,13 @@ namespace TaskNexus.Service.ImplementationsService
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IApplicationUserRepository _applicactionuserRepository;
 
+
         public ApplicationUserService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IApplicationUserRepository applicactionuserRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _applicactionuserRepository = applicactionuserRepository;
+           
         }
 
         public async Task<IBaseResponse<bool>> Register(RegisterViewModel entity)
@@ -248,6 +250,8 @@ namespace TaskNexus.Service.ImplementationsService
             }
             return baseResponse;
         }
+
+       
     }
 }
 

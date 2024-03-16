@@ -16,6 +16,8 @@ namespace TaskNexus.DAL.DB
 
             // Ініціалізувати користувачів
             InitializeUsers(userManager);
+
+            InitializePhotos(context);
         }
 
         private static void InitializeRoles(RoleManager<IdentityRole> roleManager)
@@ -44,22 +46,72 @@ namespace TaskNexus.DAL.DB
         {
             // Перевірка, чи існує адміністратор
             var adminUser = userManager.FindByEmailAsync("admin@example.com").Result;
+            var admin = userManager.FindByEmailAsync("Admin@task.com").Result;
 
-            if (adminUser == null)
+            if (adminUser == null || admin==null)
             {
                 // Створення адміністратора, якщо його не існує
                 adminUser = new ApplicationUser
                 {
-                    UserName = "admin@example.com",
-                    Email = "admin@example.com"
+                    UserName = "Admin_1",
+                    Email = "Admin@task2.com"
                 };
-                var result = userManager.CreateAsync(adminUser, "AdminPassword123!").Result;
-                if (result.Succeeded)
+               
+                admin = new ApplicationUser
+                {
+                    UserName = "Admin_2",
+                    Email = "Admin@task.com"
+                };
+                var result = userManager.CreateAsync(adminUser, "Admin1!").Result;
+                var result2 = userManager.CreateAsync(admin, "Admin2!").Result;
+
+                if (result.Succeeded&&result2.Succeeded)
                 {
                     // Додавання адміністратору ролі Admin
                     userManager.AddToRoleAsync(adminUser, "Admin").Wait();
+                    userManager.AddToRoleAsync(admin, "Admin").Wait();
+
                 }
             }
         }
+
+
+        private static void InitializePhotos(ApplicationDbContext context)
+        {
+            // Перевірка, чи в базі даних є фотографії
+            if (!context.evaluationUsers.Any())
+            {
+                // Додавання фотографій за дефолтом
+                var photo1 = new EvaluationUser
+                {
+                    Name = "Спокійна людина",
+                    Description = "Ви розмірено і своїми силами достинаєте успіху",
+                    PhotoData = GetPhotoData("E:\\C#LAB\\aspnet\\TaskNexus – копія\\фото\\rELAX.jpg")
+                };
+                var photo2 = new EvaluationUser
+                {
+                    Name = "Трудолюбива людина",
+                    Description = "Ви та людина яка поставила ціль і йде до неї як би тяжко не було",
+                    PhotoData = GetPhotoData("E:\\C#LAB\\aspnet\\TaskNexus – копія\\фото\\Good.jpg")
+                };
+                var photo3 = new EvaluationUser
+                {
+                    Name = "Забудькувата людина",
+                    Description = "Ви тут?",
+                    PhotoData = GetPhotoData("E:\\C#LAB\\aspnet\\TaskNexus – копія\\фото\\Forful.jpg")
+                };
+
+                // Додавання фотографій до контексту бази даних
+                context.evaluationUsers.AddRange(photo1, photo2, photo3);
+                context.SaveChanges();
+            }
+        }
+        private static byte[] GetPhotoData(string path)
+        {
+            return File.ReadAllBytes(path);
+        }
+
+
+
     }
 }

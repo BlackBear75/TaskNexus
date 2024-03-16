@@ -1,4 +1,5 @@
-﻿using TaskNexus.Models.Entity;
+﻿using TaskNexus.Models.ApplicationUser;
+using TaskNexus.Models.Entity;
 
 namespace TaskNexus.DAL.Interfaces
 {
@@ -14,6 +15,12 @@ namespace TaskNexus.DAL.Interfaces
         Task<List<Task_Entity>> TaskNewest(string userid);
 
         Task<List<Task_Entity>> TaskPriority(string userid);
+
+        Task<List<Task_Entity>> UserTasks(string userid);
+
+        Task<EvaluationUser> GetEvaluationUser(int count,int taskcompleted);
+
+
 
 
 

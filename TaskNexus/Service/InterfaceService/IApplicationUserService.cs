@@ -19,5 +19,8 @@ namespace TaskNexus.Service.InterfaceService
         Task<IBaseResponse<bool>> DeleteUser(string id);
 
         Task<IBaseResponse<ApplicationUser>> UpdateUser(string id,ApplicationUser entity);
+
+      
+
     }
 }

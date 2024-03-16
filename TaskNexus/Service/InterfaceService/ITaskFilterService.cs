@@ -1,4 +1,5 @@
-﻿using TaskNexus.Models.Entity;
+﻿using TaskNexus.Models.ApplicationUser;
+using TaskNexus.Models.Entity;
 using TaskNexus.Models.Response;
 
 namespace TaskNexus.Service.InterfaceService
@@ -17,7 +18,7 @@ namespace TaskNexus.Service.InterfaceService
 
         Task<IBaseResponse<IEnumerable<Task_Entity>>> TaskPriority(string userid);
 
-   
+      Task<IBaseResponse<EvaluationUser>> GetEvaluationUser(string userid);
 
 
     }

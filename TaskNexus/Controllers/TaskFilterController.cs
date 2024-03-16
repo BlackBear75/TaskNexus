@@ -92,7 +92,6 @@ namespace TaskNexus.Controllers
 
         [HttpGet]
         [Route("TaskPriority")]
-
         public async Task<IActionResult> TaskPriority()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -107,8 +106,20 @@ namespace TaskNexus.Controllers
             }
         }
 
-
-
-
+        [HttpGet]
+        [Route("GetEvaluationUser")]
+        public async Task<IActionResult> GetEvaluationUser()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var tasks = await _taskfilterService.GetEvaluationUser(user.Id);
+            if (tasks.StatusCode != Models.Enum.StatusCode.NullEntity)
+            {
+                return Ok(tasks);
+            }
+            else
+            {
+                return BadRequest(tasks.Description);
+            }
+        }
     }
 }

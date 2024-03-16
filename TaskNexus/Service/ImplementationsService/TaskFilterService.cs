@@ -1,5 +1,6 @@
 ﻿using TaskNexus.DAL.Interfaces;
 using TaskNexus.DAL.Repository;
+using TaskNexus.Models.ApplicationUser;
 using TaskNexus.Models.Entity;
 using TaskNexus.Models.Enum;
 using TaskNexus.Models.Response;
@@ -156,6 +157,53 @@ namespace TaskNexus.Service.ImplementationsService
                 return new BaseResponse<IEnumerable<Task_Entity>>()
                 {
                     Description = $"[TaskPriority] : {ex.Message}",
+                    StatusCode = StatusCode.InternalServerError
+                };
+            }
+            return baseResponse;
+        }
+
+
+        public async Task<IBaseResponse<EvaluationUser>> GetEvaluationUser(string userid)
+        {
+            var baseResponse = new BaseResponse<EvaluationUser>();
+            try
+            {
+                var res = await _taskfillterRepository.UserTasks(userid);
+             
+                if (res.Count != 0)
+                {
+                    int taskCompleted = 0;
+
+                   foreach (var task in res)
+                    {
+                        if (task.Status == Models.Enum.TaskStatus.Completed)
+                        {
+                            taskCompleted++;
+                        }
+                    }
+                    
+
+                   
+                        var evaluationUser = await _taskfillterRepository.GetEvaluationUser(res.Count,taskCompleted);
+                        baseResponse.StatusCode = StatusCode.OK;
+                        baseResponse.Data = evaluationUser;
+                        baseResponse.Description = "Good job";
+
+                  
+                }
+                else
+                {
+                    baseResponse.StatusCode = StatusCode.NullEntity;
+                    baseResponse.Description = "List null";
+                    baseResponse.Data = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<EvaluationUser>()
+                {
+                    Description = $"[GetEvaluationUser] : {ex.Message}",
                     StatusCode = StatusCode.InternalServerError
                 };
             }

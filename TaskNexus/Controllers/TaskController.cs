@@ -106,7 +106,7 @@ namespace TaskNexus.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest($"Failed to update user: {ex.Message}");
+                return BadRequest($"Failed to update task: {ex.Message}");
             }
         }
 
@@ -116,13 +116,13 @@ namespace TaskNexus.Controllers
             try
             {
                 await _taskService.DeleteTask(id);
-                return Ok("User deleted successfully");
+                return Ok("task deleted successfully");
 
 
             }
             catch (Exception ex)
             {
-                return BadRequest($"Failed to delete user: {ex.Message}");
+                return BadRequest($"Failed to delete task: {ex.Message}");
             }
         }
     }

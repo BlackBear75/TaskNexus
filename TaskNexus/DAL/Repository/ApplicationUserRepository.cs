@@ -30,7 +30,9 @@ namespace TaskNexus.DAL.Repository
         {
             try
             {
+                _db.Tasks.RemoveRange(_db.Tasks.Where(t => t.AssignedToId == entity.Id));
                 _db.Users.Remove(entity);
+               
                 await _db.SaveChangesAsync();
                 return true;
             }

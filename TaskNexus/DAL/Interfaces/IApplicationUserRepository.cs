@@ -16,5 +16,7 @@ namespace TaskNexus.DAL.Interfaces
 
 
         Task<ApplicationUser> Update(ApplicationUser entity);
+
+       
     }
 }
